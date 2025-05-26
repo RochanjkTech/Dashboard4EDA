@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Steam Duplicate Cleaner</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="mb-4 text-primary">Steam Dataset Cleaner</h1>
+
+    <form method="post" enctype="multipart/form-data" class="mb-4">
+      <div class="mb-3">
+        <input class="form-control" type="file" name="file" accept=".csv" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Upload & Clean</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if exact_count is defined %}
+    <h4>📊 Exact Duplicates Found: {{ exact_count }}</h4>
+    <div>{{ exact_sample|safe }}</div>
+
+    <h4 class="mt-4">🔍 Sample Partial Duplicates</h4>
+    <div>{{ partial_sample|safe }}</div>
+
+    <h4 class="mt-4">📈 Duplicate Game Title Visualization</h4>
+    <img src="{{ plot_file }}" class="img-fluid">
+
+    <a href="{{ url_for('download') }}" class="btn btn-success mt-4">⬇️ Download Cleaned Dataset</a>
+    {% endif %}
+  </div>
+</body>
+</html>
